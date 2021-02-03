@@ -12,19 +12,13 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
-import pages.BasePage;
-import pages.CadastroPage;
-import pages.CreateAccountPage;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.PrincipalPage;
 import suporte.Generator;
 import suporte.Screenshots;
 import suporte.Web;
-import static org.junit.Assert.assertEquals;
-import java.util.concurrent.TimeUnit;
 
-
+import java.time.Duration;
 
 
 @RunWith(DataDrivenTestRunner.class)
@@ -44,8 +38,8 @@ public class TesteMain {
     public void cadastroClientelePoc(
             @Param(name = "email") String email,
             @Param(name = "gender") String gender,
-            @Param(name = "firstName") String firstName,
-            @Param(name = "lastName") String lastName,
+            @Param(name = "firstname") String firstName,
+            @Param(name = "lastname") String lastName,
             @Param(name = "password") String password,
             @Param(name = "dia") Integer dia,
             @Param(name = "mes") Integer mes,
@@ -75,21 +69,13 @@ public class TesteMain {
                 .inserirCountry(country)
                 .inserirMobilePhone(mobilephone)
                 .inserirAlias(alias)
-                .registrar();
-
-
-        //Confirmação de cadastro
-        WebElement userInfo = navegador.findElement(By.className("header_user_info"));
-        String textoNoElementoUserInfo = userInfo.getText();
-        assertEquals("Poc South", textoNoElementoUserInfo);
-
-        String ScreenshotArquivo = "C:\\Users\\SouthSystem\\Desktop\\FotosTestSelenium\\" + Generator.dataHoraParaArquivo() + test.getMethodName() + ".png";
-        Screenshots.tirar(navegador, ScreenshotArquivo);
+                .registrar()
+                .print();
 
     }
 
     @After
     public void tearDown() {
-        //navegador.close();
+        navegador.close();
     }
 }
